@@ -4,10 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.shoe.viewmodel.ShoeModel
 
-class ShoeModelFactory(
-    private val repository: com.example.service.db.repository.ShoeRepository
-) : ViewModelProvider.NewInstanceFactory() {
+class ShoeModelFactory: ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return ShoeModel(repository) as T
+        return ShoeModel() as T
     }
 }

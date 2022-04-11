@@ -2,20 +2,29 @@ package com.example.login.viewmodel
 
 import android.text.Editable
 import androidx.lifecycle.*
+import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.example.service.db.RepositoryProvider
 import com.example.service.db.data.Shoe
 import com.example.service.db.data.User
+import com.example.service.db.repository.ShoeRepository
 import com.example.service.db.repository.UserRepository
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.wj.common.BaseApplication
+import com.wj.common.constant.UrlConstant
 import com.wj.common.listener.SimpleWatcher
 
 
-class LoginModel constructor(
-    private val repository: UserRepository
-) : ViewModel() {
+class LoginModel constructor() : ViewModel() {
+
+    @JvmField
+    @Autowired(name = UrlConstant.SERVICE_USER)
+    var repository: UserRepository? = null
+
+    @JvmField
+    @Autowired(name = UrlConstant.SERVICE_SHOE)
+    var shoeRepository: ShoeRepository? = null
 
     val n = MutableLiveData("")
     val p = MutableLiveData("")
@@ -72,7 +81,7 @@ class LoginModel constructor(
         val account = n.value!!
         //val pwd = p.get()!!
         //val account = n.get()!!
-        return repository.login(account, pwd)
+        return repository?.login(account, pwd)
     }
 
 
@@ -86,13 +95,12 @@ class LoginModel constructor(
                 val shoeType = object : TypeToken<List<Shoe>>() {}.type
                 val shoeList: List<Shoe> = Gson().fromJson(it, shoeType)
 
-                val shoeDao = RepositoryProvider.providerShoeRepository(context)
-                shoeDao.insertShoes(shoeList)
+                shoeRepository?.insertShoes(shoeList)
                 for (i in 0..2) {
                     for (shoe in shoeList) {
                         shoe.id += shoeList.size
                     }
-                    shoeDao.insertShoes(shoeList)
+                    shoeRepository?.insertShoes(shoeList)
                 }
             }
 

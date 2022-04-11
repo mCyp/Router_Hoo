@@ -3,9 +3,16 @@ package com.example.shoe.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import com.alibaba.android.arouter.facade.annotation.Autowired
+import com.example.service.db.repository.ShoeRepository
+import com.wj.common.constant.UrlConstant
 import kotlinx.coroutines.flow.*
 
-class ShoeModel constructor(private val shoeRepository: com.example.service.db.repository.ShoeRepository) : ViewModel() {
+class ShoeModel: ViewModel() {
+
+    @JvmField
+    @Autowired(name = UrlConstant.SERVICE_SHOE)
+    var shoeRepository: ShoeRepository? = null
 
     private val selectedBrand = MutableStateFlow(ALL)
 
@@ -28,8 +35,8 @@ class ShoeModel constructor(private val shoeRepository: com.example.service.db.r
             enablePlaceholders = false,
             initialLoadSize = 20
         ), pagingSourceFactory = {
-            brand?.let { shoeRepository.getShoesByBrandPagingSource(it) }
-                ?: shoeRepository.getAllShoesPagingSource()
+            brand?.let { shoeRepository!!.getShoesByBrandPagingSource(it) }
+                ?: shoeRepository!!.getAllShoesPagingSource()
         }).flow
     }
 

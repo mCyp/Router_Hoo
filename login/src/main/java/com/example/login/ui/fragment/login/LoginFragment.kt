@@ -32,7 +32,7 @@ import kotlinx.coroutines.withContext
 class LoginFragment : Fragment() {
 
     private val loginModel: LoginModel by viewModels {
-        CustomViewModelProvider.providerLoginModel(requireContext())
+        CustomViewModelProvider.providerLoginModel()
     }
 
     /*private val loginModel: LoginModel by lazy {

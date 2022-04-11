@@ -63,7 +63,7 @@ class ShoeFragment : Fragment() {
 
     // by viewModels 需要依赖 "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
     private val viewModel: ShoeModel by viewModels {
-        CustomViewModelProvider.providerShoeModel(requireContext())
+        CustomViewModelProvider.providerShoeModel()
     }
 
     override fun onCreateView(

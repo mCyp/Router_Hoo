@@ -6,9 +6,13 @@ import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.createDataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alibaba.android.arouter.facade.annotation.Autowired
+import com.example.service.db.repository.StorageDataRepository
+import com.example.service.db.repository.UserRepository
 import com.example.shoe.ui.activity.TEST_NAME
 import com.wj.common.util.AppPrefsUtils
 import com.tencent.mmkv.MMKV
+import com.wj.common.constant.UrlConstant
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
@@ -19,7 +23,11 @@ import kotlinx.coroutines.launch
 import kotlin.time.ExperimentalTime
 import kotlin.time.TimeSource
 
-class StorageModel(private val storageDataRepository: com.example.service.db.repository.StorageDataRepository) : ViewModel() {
+class StorageModel: ViewModel() {
+
+    @JvmField
+    @Autowired(name = UrlConstant.SERVICE_STORAGE)
+    var storageDataRepository: StorageDataRepository? = null
 
     /**
      * SP 数据写入
@@ -256,19 +264,19 @@ class StorageModel(private val storageDataRepository: com.example.service.db.rep
         viewModelScope.launch(Dispatchers.IO) {
             val beginTime = TimeSource.Monotonic.markNow()
             when (type) {
-                "int" -> { writeDataOnSQLOnDetail(fileSize, dataSize){j-> storageDataRepository.insertOneStorageData(
+                "int" -> { writeDataOnSQLOnDetail(fileSize, dataSize){j-> storageDataRepository?.insertOneStorageData(
                     com.example.service.db.data.StorageData("int${j}", j.toString())
                 ) } }
-                "long" -> { writeDataOnSQLOnDetail(fileSize, dataSize){j-> storageDataRepository.insertOneStorageData(
+                "long" -> { writeDataOnSQLOnDetail(fileSize, dataSize){j-> storageDataRepository?.insertOneStorageData(
                     com.example.service.db.data.StorageData("long${j}", j.toString())
                 ) } }
-                "float" -> { writeDataOnSQLOnDetail(fileSize, dataSize){j-> storageDataRepository.insertOneStorageData(
+                "float" -> { writeDataOnSQLOnDetail(fileSize, dataSize){j-> storageDataRepository?.insertOneStorageData(
                     com.example.service.db.data.StorageData("float${j}", j.toString())
                 ) } }
-                "Boolean" -> { writeDataOnSQLOnDetail(fileSize, dataSize){j-> storageDataRepository.insertOneStorageData(
+                "Boolean" -> { writeDataOnSQLOnDetail(fileSize, dataSize){j-> storageDataRepository?.insertOneStorageData(
                     com.example.service.db.data.StorageData("Boolean${j}", j.toString())
                 ) } }
-                "String" -> { writeDataOnSQLOnDetail(fileSize, dataSize){j-> storageDataRepository.insertOneStorageData(
+                "String" -> { writeDataOnSQLOnDetail(fileSize, dataSize){j-> storageDataRepository?.insertOneStorageData(
                     com.example.service.db.data.StorageData("String\$${j}", j.toString())
                 ) } }
             }
@@ -291,31 +299,31 @@ class StorageModel(private val storageDataRepository: com.example.service.db.rep
             when (type) {
                 "int" -> {
                     checkDataOnSQLOnDetail(fileSize, dataSize) { j ->
-                        val data = storageDataRepository.findStorageDataById("int${j}")
+                        val data = storageDataRepository?.findStorageDataById("int${j}")
                         return@checkDataOnSQLOnDetail (data == null || data.value != j.toString())
                     }
                 }
                 "long" -> {
                     checkDataOnSQLOnDetail(fileSize, dataSize) { j ->
-                        val data = storageDataRepository.findStorageDataById("long${j}")
+                        val data = storageDataRepository?.findStorageDataById("long${j}")
                         return@checkDataOnSQLOnDetail (data == null || data.value != j.toString())
                     }
                 }
                 "float" -> {
                     checkDataOnSQLOnDetail(fileSize, dataSize) { j ->
-                        val data = storageDataRepository.findStorageDataById("float${j}")
+                        val data = storageDataRepository?.findStorageDataById("float${j}")
                         return@checkDataOnSQLOnDetail (data == null || data.value != j.toString())
                     }
                 }
                 "Boolean" -> {
                     checkDataOnSQLOnDetail(fileSize, dataSize) { j ->
-                        val data = storageDataRepository.findStorageDataById("Boolean${j}")
+                        val data = storageDataRepository?.findStorageDataById("Boolean${j}")
                         return@checkDataOnSQLOnDetail (data == null || data.value != j.toString())
                     }
                 }
                 "String" -> {
                     checkDataOnSQLOnDetail(fileSize, dataSize) { j ->
-                        val data = storageDataRepository.findStorageDataById("String${j}")
+                        val data = storageDataRepository?.findStorageDataById("String${j}")
                         return@checkDataOnSQLOnDetail (data == null || data.value != j.toString())
                     }
                 }

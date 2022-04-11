@@ -1,47 +1,37 @@
 package com.example.service.db.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.service.db.AppDataBase
 import com.example.service.db.dao.StorageDataDao
 import com.example.service.db.dao.UserDao
 import com.example.service.db.data.StorageData
 import com.example.service.db.data.User
+import com.example.service.db.provider.StorageService
+import com.wj.common.constant.UrlConstant
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 
 /**
  * StorageData 仓库
  */
-class StorageDataRepository private constructor(private val storageDataDao: StorageDataDao) {
+@Route(path = UrlConstant.SERVICE_STORAGE)
+class StorageDataRepository constructor():
+    StorageService {
 
-    /**
-     * 获取所有的数据
-     */
-    fun getAllStorageData() = storageDataDao.getAllStorageData()
+    private lateinit var storageDataDao: StorageDataDao
 
-    fun insertAllStorageData(data: List<StorageData>) {
+    override fun insertOneStorageData(data: StorageData){
         storageDataDao.insertStorageData(data)
     }
 
-    fun insertOneStorageData(data: StorageData){
-        storageDataDao.insertStorageData(data)
-    }
-
-    fun findStorageDataById(id: String): StorageData? {
+    override fun findStorageDataById(id: String): StorageData? {
         return storageDataDao.findStorageDataByKey(id)
     }
 
-
-    companion object {
-        @Volatile
-        private var instance: StorageDataRepository? = null
-
-        fun getInstance(storageDataDao: StorageDataDao): StorageDataRepository =
-            instance ?: synchronized(this) {
-                instance
-                    ?: StorageDataRepository(storageDataDao).also {
-                    instance = it
-                }
-            }
-
+    override fun init(context: Context) {
+        storageDataDao = AppDataBase.getInstance(context).storageDataDao()
     }
+
 }

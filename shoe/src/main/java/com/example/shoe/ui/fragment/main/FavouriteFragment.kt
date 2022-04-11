@@ -20,7 +20,7 @@ import com.example.shoe.viewmodel.FavouriteModel
 class FavouriteFragment : Fragment() {
 
     private val viewModel: FavouriteModel by viewModels {
-        CustomViewModelProvider.providerFavouriteModel(requireContext())
+        CustomViewModelProvider.providerFavouriteModel()
     }
 
     override fun onCreateView(
@@ -43,7 +43,7 @@ class FavouriteFragment : Fragment() {
         binding.empty.bind(arrayOf(binding.recycler))
         binding.empty.triggerLoading()
 
-        viewModel.shoes.observe(viewLifecycleOwner, Observer {
+        viewModel.shoes?.observe(viewLifecycleOwner, Observer {
             if (it != null && it.isNotEmpty()) {
                 adapter.submitList(it)
             }

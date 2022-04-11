@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.*
+import com.alibaba.android.arouter.facade.annotation.Autowired
+import com.example.service.db.repository.UserRepository
 import com.example.shoe.worker.BlurWorker
 import com.example.shoe.worker.CleanUpWorker
 import com.example.shoe.worker.SaveImageToFileWorker
@@ -12,15 +14,21 @@ import com.wj.common.constant.BaseConstant
 import com.wj.common.constant.BaseConstant.IMAGE_MANIPULATION_WORK_NAME
 import com.wj.common.constant.BaseConstant.KEY_IMAGE_URI
 import com.wj.common.constant.BaseConstant.TAG_OUTPUT
+import com.wj.common.constant.UrlConstant
 import com.wj.common.util.AppPrefsUtils
 import kotlinx.coroutines.launch
 
-class MeModel(val userRepository: com.example.service.db.repository.UserRepository) : ViewModel() {
+class MeModel() : ViewModel() {
+
+    @JvmField
+    @Autowired(name = UrlConstant.SERVICE_USER)
+    var userRepository: UserRepository? = null
+
     internal var imageUri: Uri? = null
     internal var outPutUri: Uri? = null
     internal val outPutWorkInfos: LiveData<List<WorkInfo>>
     private val workManager = WorkManager.getInstance()
-    val user = userRepository.findUserById(AppPrefsUtils.getLong(BaseConstant.SP_USER_ID))
+    val user = userRepository?.findUserById(AppPrefsUtils.getLong(BaseConstant.SP_USER_ID))
 
     init {
         outPutWorkInfos = workManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
@@ -103,11 +111,11 @@ class MeModel(val userRepository: com.example.service.db.repository.UserReposito
 
     internal fun setOutputUri(uri: String?) {
         outPutUri = uriOrNull(uri)
-        val value = user.value
+        val value = user?.value
         value?.headImage = uri!!
         if (value != null) {
             viewModelScope.launch {
-                userRepository.updateUser(value)
+                userRepository?.updateUser(value)
             }
         }
     }

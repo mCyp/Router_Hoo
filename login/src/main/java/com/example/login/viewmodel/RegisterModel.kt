@@ -3,12 +3,15 @@ package com.example.login.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.example.service.db.repository.UserRepository
 import kotlinx.coroutines.launch
 
-class RegisterModel constructor(
-    private val repository: UserRepository
-) : ViewModel() {
+class RegisterModel constructor() : ViewModel() {
+
+    @JvmField
+    @Autowired
+    var repository: UserRepository? = null
 
     val n = MutableLiveData("")
     val p = MutableLiveData("")
@@ -50,7 +53,7 @@ class RegisterModel constructor(
 
     fun register() {
         viewModelScope.launch {
-            repository.register(mail.value!!, n.value!!, p.value!!)
+            repository?.register(mail.value!!, n.value!!, p.value!!)
         }
     }
 

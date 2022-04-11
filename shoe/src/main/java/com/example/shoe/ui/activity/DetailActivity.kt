@@ -53,9 +53,8 @@ class DetailActivity : AppCompatActivity() {
 
     private val detailModel: DetailModel by viewModels {
         CustomViewModelProvider.providerDetailModel(
-            this
-            , intent.getLongExtra(BaseConstant.DETAIL_SHOE_ID, 1L)
-            , AppPrefsUtils.getLong(BaseConstant.SP_USER_ID)
+            intent.getLongExtra(BaseConstant.DETAIL_SHOE_ID, 1L),
+            AppPrefsUtils.getLong(BaseConstant.SP_USER_ID)
         )
     }
 
@@ -89,10 +88,10 @@ class DetailActivity : AppCompatActivity() {
             onBackPressed()
         }
 
-        val transitionName = "${detailModel.shoe.value?.id}${detailModel.shoe.value?.imageUrl}"
+        val transitionName = "${detailModel.shoe?.value?.id}${detailModel.shoe?.value?.imageUrl}"
         binding.ivShoe.transitionName = transitionName
         binding.ivShoe.setOnClickListener {
-            detailModel.shoe.value?.imageUrl?.let {
+            detailModel.shoe?.value?.imageUrl?.let {
                 val options = ActivityOptions.makeSceneTransitionAnimation(this, binding.ivShoe, transitionName)
                 ImageGalleryActivity.start(this, it, options.toBundle(), transitionName)
             }

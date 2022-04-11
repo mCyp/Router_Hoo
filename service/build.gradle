@@ -11,6 +11,12 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
     }
 
     buildTypes {
@@ -54,4 +60,7 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:${dataStoreVersion}"
     implementation "com.tencent:mmkv-static:${mmkvVersion}"
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+
+    implementation 'com.alibaba:arouter-api:1.5.2'
+    kapt 'com.alibaba:arouter-compiler:1.5.2'
 }

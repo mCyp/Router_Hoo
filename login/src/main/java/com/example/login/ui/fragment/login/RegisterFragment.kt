@@ -24,7 +24,7 @@ import com.wj.common.constant.BaseConstant
 class RegisterFragment : Fragment() {
 
     private val registerModel: RegisterModel by viewModels{
-        CustomViewModelProvider.providerRegisterModel(requireContext())
+        CustomViewModelProvider.providerRegisterModel()
     }
 
     override fun onCreateView(

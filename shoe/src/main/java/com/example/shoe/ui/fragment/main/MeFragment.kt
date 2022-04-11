@@ -29,7 +29,7 @@ class MeFragment : Fragment() {
     private val TAG by lazy { MeFragment::class.java.simpleName }
     // MeModel懒加载
     private val model: MeModel by viewModels {
-        CustomViewModelProvider.providerMeModel(requireContext())
+        CustomViewModelProvider.providerMeModel()
     }
 
     // 选择图片的标识
@@ -91,7 +91,7 @@ class MeFragment : Fragment() {
         binding.model = model
 
         // 任务状态的观测
-        model.outPutWorkInfos.observe(this, Observer {
+        model.outPutWorkInfos.observe(viewLifecycleOwner, Observer {
             if (it.isNullOrEmpty())
                 return@Observer
 

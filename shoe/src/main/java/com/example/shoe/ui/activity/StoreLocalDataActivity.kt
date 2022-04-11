@@ -17,9 +17,7 @@ const val TEST_NAME = "store"
 class StoreLocalDataActivity : AppCompatActivity(),View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private val storageModel: StorageModel by viewModels {
-        CustomViewModelProvider.provideStorageDataModel(
-            this
-        )
+        CustomViewModelProvider.provideStorageDataModel()
     }
 
     private lateinit var spAddType: Spinner

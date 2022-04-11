@@ -1,42 +1,42 @@
 package com.example.service.db.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.service.db.AppDataBase
 import com.example.service.db.dao.FavouriteShoeDao
 import com.example.service.db.dao.ShoeDao
 import com.example.service.db.data.FavouriteShoe
 import com.example.service.db.data.Shoe
+import com.example.service.db.provider.FavouriteShoeService
+import com.wj.common.constant.UrlConstant
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class FavouriteShoeRepository private constructor(private val favouriteShoeDao: FavouriteShoeDao) {
+@Route(path = UrlConstant.SERVICE_FAV_SHOE)
+class FavouriteShoeRepository constructor():
+    FavouriteShoeService {
+
+    private lateinit var favouriteShoeDao: FavouriteShoeDao
 
     /**
      * 查看某个用户是否有喜欢记录
      */
-    fun findFavouriteShoe(userId:Long,shoeId:Long):LiveData<FavouriteShoe?>
+    override fun findFavouriteShoe(userId:Long,shoeId:Long):LiveData<FavouriteShoe?>
             = favouriteShoeDao.findFavouriteShoeByUserIdAndShoeId(userId, shoeId)
 
     /**
      * 收藏一双鞋
      */
-    suspend fun createFavouriteShoe(userId:Long,shoeId: Long){
+    override suspend fun createFavouriteShoe(userId:Long,shoeId: Long){
         withContext(IO){
             favouriteShoeDao.insertFavouriteShoe(FavouriteShoe(shoeId,userId, Calendar.getInstance()))
         }
     }
 
-    companion object {
-        @Volatile
-        private var instance: FavouriteShoeRepository? = null
-
-        fun getInstance(favouriteShoeDao: FavouriteShoeDao): FavouriteShoeRepository =
-            instance ?: synchronized(this) {
-                instance
-                    ?: FavouriteShoeRepository(favouriteShoeDao).also {
-                        instance = it
-                    }
-            }
-
+    override fun init(context: Context) {
+        favouriteShoeDao = AppDataBase.getInstance(context).favouriteShoeDao()
     }
+
 }

@@ -4,10 +4,13 @@ import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.alibaba.android.arouter.facade.annotation.Autowired
+import com.example.service.db.repository.ShoeRepository
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.wj.common.constant.BaseConstant
+import com.wj.common.constant.UrlConstant
 import com.wj.common.util.AppPrefsUtils
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +21,10 @@ class ShoeWorker(
     context: Context,
     workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
+
+    @JvmField
+    @Autowired(name = UrlConstant.SERVICE_SHOE)
+    var shoeRepository: ShoeRepository? = null
 
     private val TAG by lazy {
         ShoeWorker::class.java.simpleName
@@ -34,13 +41,12 @@ class ShoeWorker(
                     val shoeType = object : TypeToken<List<com.example.service.db.data.Shoe>>() {}.type
                     val shoeList: List<com.example.service.db.data.Shoe> = Gson().fromJson(it, shoeType)
 
-                    val shoeDao = com.example.service.db.RepositoryProvider.providerShoeRepository(applicationContext)
-                    shoeDao.insertShoes(shoeList)
+                    shoeRepository?.insertShoes(shoeList)
                     for (i in 0..6) {
                         for (shoe in shoeList) {
                             shoe.id += shoeList.size
                         }
-                        shoeDao.insertShoes(shoeList)
+                        shoeRepository?.insertShoes(shoeList)
                     }
                     AppPrefsUtils.putBoolean(BaseConstant.IS_FIRST_LAUNCH,false)
                     Result.success()

@@ -1,56 +1,47 @@
 package com.example.service.db.repository
 
+import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.paging.PagingSource
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.service.db.AppDataBase
 import com.example.service.db.dao.ShoeDao
 import com.example.service.db.data.Shoe
+import com.example.service.db.provider.ShoeService
+import com.wj.common.constant.UrlConstant
 
-class ShoeRepository private constructor(private val shoeDao: ShoeDao) {
+@Route(path = UrlConstant.SERVICE_SHOE)
+class ShoeRepository constructor(): ShoeService {
+    private lateinit var shoeDao: ShoeDao
 
     /**
      * 通过id的范围寻找鞋子
      */
-    fun getPageShoes(startIndex: Long, endIndex: Long): List<Shoe> =
+    override fun getPageShoes(startIndex: Long, endIndex: Long): List<Shoe> =
         shoeDao.findShoesByIndexRange(startIndex, endIndex)
-
-    fun getAllShoes() = shoeDao.getAllShoesLD()
-
-    /**
-     * 通过品牌查询鞋子
-     */
-    fun getShoesByBrand(brand: Array<String>) = shoeDao.findShoesByBrandLD(brand)
 
     /**
      * 通过Id查询一双鞋
      */
-    fun getShoeById(id: Long) = shoeDao.findShoeByIdLD(id)
+    override fun getShoeById(id: Long):LiveData<Shoe> = shoeDao.findShoeByIdLD(id)
 
     /**
      * 查询用户收藏的鞋
      */
-    fun getShoesByUserId(userId: Long) = shoeDao.findShoesByUserId(userId)
+    override fun getShoesByUserId(userId: Long): LiveData<List<Shoe>> = shoeDao.findShoesByUserId(userId)
 
     /**
      * 插入鞋子的集合
      */
-    fun insertShoes(shoes: List<Shoe>) = shoeDao.insertShoes(shoes)
+    override fun insertShoes(shoes: List<Shoe>) = shoeDao.insertShoes(shoes)
 
-    fun getAllShoesPagingSource(): PagingSource<Int, Shoe> = shoeDao.getAllShoesLD()
+    override fun getAllShoesPagingSource(): PagingSource<Int, Shoe> = shoeDao.getAllShoesLD()
 
-    fun getShoesByBrandPagingSource(brand: Array<String>): PagingSource<Int, Shoe> =
+    override fun getShoesByBrandPagingSource(brand: Array<String>): PagingSource<Int, Shoe> =
         shoeDao.findShoesByBrandLD(brand)
 
-    companion object {
-        @Volatile
-        private var instance: ShoeRepository? = null
-
-        fun getInstance(shoeDao: ShoeDao): ShoeRepository =
-            instance ?: synchronized(this) {
-                instance
-                    ?: ShoeRepository(shoeDao).also {
-                        instance = it
-                    }
-            }
-
+    override fun init(context: Context) {
+        shoeDao = AppDataBase.getInstance(context).shoeDao()
     }
 }

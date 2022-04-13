@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.*
 import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.example.service.db.repository.UserRepository
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.shoe.worker.BlurWorker
 import com.example.shoe.worker.CleanUpWorker
 import com.example.shoe.worker.SaveImageToFileWorker
@@ -15,14 +15,19 @@ import com.wj.common.constant.BaseConstant.IMAGE_MANIPULATION_WORK_NAME
 import com.wj.common.constant.BaseConstant.KEY_IMAGE_URI
 import com.wj.common.constant.BaseConstant.TAG_OUTPUT
 import com.wj.common.constant.UrlConstant
+import com.wj.common.service.UserService
 import com.wj.common.util.AppPrefsUtils
 import kotlinx.coroutines.launch
 
 class MeModel() : ViewModel() {
 
+    init {
+        ARouter.getInstance().inject(this)
+    }
+
     @JvmField
     @Autowired(name = UrlConstant.SERVICE_USER)
-    var userRepository: UserRepository? = null
+    var userRepository: UserService? = null
 
     internal var imageUri: Uri? = null
     internal var outPutUri: Uri? = null

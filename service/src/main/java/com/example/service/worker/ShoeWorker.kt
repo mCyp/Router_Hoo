@@ -38,8 +38,8 @@ class ShoeWorker(
         try {
             applicationContext.assets.open("shoes.json").use {
                 JsonReader(it.reader()).use {
-                    val shoeType = object : TypeToken<List<com.example.service.db.data.Shoe>>() {}.type
-                    val shoeList: List<com.example.service.db.data.Shoe> = Gson().fromJson(it, shoeType)
+                    val shoeType = object : TypeToken<List<com.example.entity.data.Shoe>>() {}.type
+                    val shoeList: List<com.example.entity.data.Shoe> = Gson().fromJson(it, shoeType)
 
                     shoeRepository?.insertShoes(shoeList)
                     for (i in 0..6) {

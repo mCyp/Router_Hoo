@@ -1,7 +1,7 @@
 package com.example.service.db.datasource
 
 import androidx.paging.PagingSource
-import com.example.service.db.data.Shoe
+import com.example.entity.data.Shoe
 import com.example.service.db.repository.ShoeRepository
 import java.lang.Exception
 

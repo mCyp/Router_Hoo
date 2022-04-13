@@ -1,8 +1,8 @@
-package com.example.service.db.provider
+package com.wj.common.service
 
 import androidx.lifecycle.LiveData
 import com.alibaba.android.arouter.facade.template.IProvider
-import com.example.service.db.data.FavouriteShoe
+import com.example.entity.data.FavouriteShoe
 
 interface FavouriteShoeService: IProvider {
     fun findFavouriteShoe(userId:Long,shoeId:Long): LiveData<FavouriteShoe?>

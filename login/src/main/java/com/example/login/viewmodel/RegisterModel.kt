@@ -4,14 +4,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.example.service.db.repository.UserRepository
+import com.alibaba.android.arouter.launcher.ARouter
+import com.wj.common.service.UserService
 import kotlinx.coroutines.launch
 
 class RegisterModel constructor() : ViewModel() {
 
+    init {
+        ARouter.getInstance().inject(this)
+    }
+
     @JvmField
     @Autowired
-    var repository: UserRepository? = null
+    var repository: UserService? = null
 
     val n = MutableLiveData("")
     val p = MutableLiveData("")

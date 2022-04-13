@@ -4,12 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.shoe.databinding.ShoeRecyclerItemBinding
-import com.example.shoe.ui.activity.DetailActivity
 import com.wj.common.constant.BaseConstant
 import com.wj.common.constant.UrlConstant
 
@@ -17,7 +15,7 @@ import com.wj.common.constant.UrlConstant
  * 鞋子的适配器 配合Data Binding使用
  */
 class ShoeAdapter constructor(val context: Context) :
-        PagingDataAdapter<com.example.service.db.data.Shoe, ShoeAdapter.ViewHolder>(ShoeDiffCallback()) {
+        PagingDataAdapter<com.example.entity.data.Shoe, ShoeAdapter.ViewHolder>(ShoeDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -53,7 +51,7 @@ private fun onCreateListener(id: Long, url: String): View.OnClickListener {
 
     class ViewHolder(private val binding: ShoeRecyclerItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(listener: View.OnClickListener, item: com.example.service.db.data.Shoe) {
+        fun bind(listener: View.OnClickListener, item: com.example.entity.data.Shoe) {
             binding.apply {
                 this.listener = listener
                 // this.ivShoe.setOnClickListener(listener)

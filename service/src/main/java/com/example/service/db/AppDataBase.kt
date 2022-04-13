@@ -9,10 +9,10 @@ import com.example.service.db.dao.FavouriteShoeDao
 import com.example.service.db.dao.ShoeDao
 import com.example.service.db.dao.StorageDataDao
 import com.example.service.db.dao.UserDao
-import com.example.service.db.data.FavouriteShoe
-import com.example.service.db.data.Shoe
-import com.example.service.db.data.StorageData
-import com.example.service.db.data.User
+import com.example.entity.data.FavouriteShoe
+import com.example.entity.data.Shoe
+import com.example.entity.data.StorageData
+import com.example.entity.data.User
 import com.example.service.worker.ShoeWorker
 import com.wj.common.constant.BaseConstant
 import com.wj.common.util.AppPrefsUtils

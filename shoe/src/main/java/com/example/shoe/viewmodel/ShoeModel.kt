@@ -4,15 +4,20 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.example.service.db.repository.ShoeRepository
+import com.alibaba.android.arouter.launcher.ARouter
 import com.wj.common.constant.UrlConstant
+import com.wj.common.service.ShoeService
 import kotlinx.coroutines.flow.*
 
 class ShoeModel: ViewModel() {
 
+    init {
+        ARouter.getInstance().inject(this)
+    }
+
     @JvmField
     @Autowired(name = UrlConstant.SERVICE_SHOE)
-    var shoeRepository: ShoeRepository? = null
+    var shoeRepository: ShoeService? = null
 
     private val selectedBrand = MutableStateFlow(ALL)
 

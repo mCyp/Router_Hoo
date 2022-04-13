@@ -1,8 +1,8 @@
-package com.example.service.db.provider
+package com.wj.common.service
 
 import androidx.lifecycle.LiveData
 import com.alibaba.android.arouter.facade.template.IProvider
-import com.example.service.db.data.User
+import com.example.entity.data.User
 
 interface UserService : IProvider {
     fun findUserById(id: Long): LiveData<User>

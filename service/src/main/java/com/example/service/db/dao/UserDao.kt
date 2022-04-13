@@ -1,9 +1,8 @@
 package com.example.service.db.dao
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
-import com.example.service.db.data.User
+import com.example.entity.data.User
 
 /**
  * 用户的Dao

@@ -5,11 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagedList
 import androidx.paging.PagingSource
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.entity.data.Shoe
 import com.example.service.db.AppDataBase
 import com.example.service.db.dao.ShoeDao
-import com.example.service.db.data.Shoe
-import com.example.service.db.provider.ShoeService
 import com.wj.common.constant.UrlConstant
+import com.wj.common.service.ShoeService
 
 @Route(path = UrlConstant.SERVICE_SHOE)
 class ShoeRepository constructor(): ShoeService {

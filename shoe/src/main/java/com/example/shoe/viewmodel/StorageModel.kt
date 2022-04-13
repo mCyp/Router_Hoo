@@ -7,12 +7,12 @@ import androidx.datastore.preferences.createDataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.example.service.db.repository.StorageDataRepository
-import com.example.service.db.repository.UserRepository
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.shoe.ui.activity.TEST_NAME
 import com.wj.common.util.AppPrefsUtils
 import com.tencent.mmkv.MMKV
 import com.wj.common.constant.UrlConstant
+import com.wj.common.service.StorageService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.channels.Channel
@@ -25,9 +25,13 @@ import kotlin.time.TimeSource
 
 class StorageModel: ViewModel() {
 
+    init {
+        ARouter.getInstance().inject(this)
+    }
+
     @JvmField
     @Autowired(name = UrlConstant.SERVICE_STORAGE)
-    var storageDataRepository: StorageDataRepository? = null
+    var storageDataRepository: StorageService? = null
 
     /**
      * SP 数据写入
@@ -265,19 +269,19 @@ class StorageModel: ViewModel() {
             val beginTime = TimeSource.Monotonic.markNow()
             when (type) {
                 "int" -> { writeDataOnSQLOnDetail(fileSize, dataSize){j-> storageDataRepository?.insertOneStorageData(
-                    com.example.service.db.data.StorageData("int${j}", j.toString())
+                    com.example.entity.data.StorageData("int${j}", j.toString())
                 ) } }
                 "long" -> { writeDataOnSQLOnDetail(fileSize, dataSize){j-> storageDataRepository?.insertOneStorageData(
-                    com.example.service.db.data.StorageData("long${j}", j.toString())
+                    com.example.entity.data.StorageData("long${j}", j.toString())
                 ) } }
                 "float" -> { writeDataOnSQLOnDetail(fileSize, dataSize){j-> storageDataRepository?.insertOneStorageData(
-                    com.example.service.db.data.StorageData("float${j}", j.toString())
+                    com.example.entity.data.StorageData("float${j}", j.toString())
                 ) } }
                 "Boolean" -> { writeDataOnSQLOnDetail(fileSize, dataSize){j-> storageDataRepository?.insertOneStorageData(
-                    com.example.service.db.data.StorageData("Boolean${j}", j.toString())
+                    com.example.entity.data.StorageData("Boolean${j}", j.toString())
                 ) } }
                 "String" -> { writeDataOnSQLOnDetail(fileSize, dataSize){j-> storageDataRepository?.insertOneStorageData(
-                    com.example.service.db.data.StorageData("String\$${j}", j.toString())
+                    com.example.entity.data.StorageData("String\$${j}", j.toString())
                 ) } }
             }
             Log.e("StorageModel", "SQL write time: " + beginTime.elapsedNow().inMilliseconds)

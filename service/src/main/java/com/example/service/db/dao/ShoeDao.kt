@@ -1,12 +1,9 @@
 package com.example.service.db.dao
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.paging.DataSource
 import androidx.paging.PagingSource
 import androidx.room.*
-import com.example.service.db.data.Shoe
-import com.example.service.db.data.User
+import com.example.entity.data.Shoe
 
 /**
  * 鞋子的Dao

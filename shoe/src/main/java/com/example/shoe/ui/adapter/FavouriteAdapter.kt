@@ -14,7 +14,7 @@ import com.example.shoe.ui.activity.DetailActivity
 /**
  * 收藏记录的适配器
  */
-class FavouriteAdapter constructor(val context: Context) : ListAdapter<com.example.service.db.data.Shoe, FavouriteAdapter.FavouriteViewHolder>(ShoeDiffCallback()) {
+class FavouriteAdapter constructor(val context: Context) : ListAdapter<com.example.entity.data.Shoe, FavouriteAdapter.FavouriteViewHolder>(ShoeDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavouriteViewHolder {
         return FavouriteViewHolder(
@@ -48,7 +48,7 @@ class FavouriteAdapter constructor(val context: Context) : ListAdapter<com.examp
 
     class FavouriteViewHolder(private val binding: FavouriteRecyclerItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(listener: View.OnClickListener, item: com.example.service.db.data.Shoe) {
+        fun bind(listener: View.OnClickListener, item: com.example.entity.data.Shoe) {
             binding.apply {
                 this.listener = listener
                 this.shoe = item

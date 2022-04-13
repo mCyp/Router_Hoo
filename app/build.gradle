@@ -40,6 +40,9 @@ dependencies {
     implementation project(':common')
     implementation project(':login')
     implementation project(':shoe')
+    implementation project(':common')
+    implementation project(':entity')
+    implementation project(':service')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'

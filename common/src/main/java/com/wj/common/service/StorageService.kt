@@ -1,7 +1,7 @@
-package com.example.service.db.provider
+package com.wj.common.service
 
 import com.alibaba.android.arouter.facade.template.IProvider
-import com.example.service.db.data.StorageData
+import com.example.entity.data.StorageData
 
 interface StorageService : IProvider {
     fun insertOneStorageData(data: StorageData)

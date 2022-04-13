@@ -3,28 +3,32 @@ package com.example.login.viewmodel
 import android.text.Editable
 import androidx.lifecycle.*
 import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.example.service.db.RepositoryProvider
-import com.example.service.db.data.Shoe
-import com.example.service.db.data.User
-import com.example.service.db.repository.ShoeRepository
-import com.example.service.db.repository.UserRepository
+import com.alibaba.android.arouter.launcher.ARouter
+import com.example.entity.data.Shoe
+import com.example.entity.data.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.wj.common.BaseApplication
 import com.wj.common.constant.UrlConstant
 import com.wj.common.listener.SimpleWatcher
+import com.wj.common.service.ShoeService
+import com.wj.common.service.UserService
 
 
 class LoginModel constructor() : ViewModel() {
 
+    init {
+        ARouter.getInstance().inject(this)
+    }
+
     @JvmField
     @Autowired(name = UrlConstant.SERVICE_USER)
-    var repository: UserRepository? = null
+    var repository: UserService? = null
 
     @JvmField
     @Autowired(name = UrlConstant.SERVICE_SHOE)
-    var shoeRepository: ShoeRepository? = null
+    var shoeRepository: ShoeService? = null
 
     val n = MutableLiveData("")
     val p = MutableLiveData("")

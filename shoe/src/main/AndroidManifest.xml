@@ -8,7 +8,8 @@
         <activity android:name="com.example.shoe.ui.activity.StoreLocalDataActivity" />
         <activity android:name="com.example.shoe.ui.activity.DetailActivity" />
 
-        <activity android:name="com.example.shoe.ui.activity.MainActivity" />
+        <activity android:name="com.example.shoe.ui.activity.MainActivity"
+            />
 
         <receiver android:name="com.example.shoe.ui.provider.DeepLinkAppWidgetProvider">
             <intent-filter>

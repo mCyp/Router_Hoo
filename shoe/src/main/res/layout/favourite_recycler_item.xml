@@ -6,7 +6,7 @@
 	<data>
 		<variable
 			name="shoe"
-			type="com.example.service.db.data.Shoe"/>
+			type="com.example.entity.data.Shoe"/>
 
 		<variable
 			name="listener"

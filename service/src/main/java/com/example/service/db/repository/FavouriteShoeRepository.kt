@@ -3,13 +3,12 @@ package com.example.service.db.repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.example.entity.data.FavouriteShoe
 import com.example.service.db.AppDataBase
 import com.example.service.db.dao.FavouriteShoeDao
 import com.example.service.db.dao.ShoeDao
-import com.example.service.db.data.FavouriteShoe
-import com.example.service.db.data.Shoe
-import com.example.service.db.provider.FavouriteShoeService
 import com.wj.common.constant.UrlConstant
+import com.wj.common.service.FavouriteShoeService
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 import java.util.*

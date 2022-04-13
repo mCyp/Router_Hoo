@@ -6,8 +6,8 @@ object UrlConstant {
     const val DETAIL_URL = "/shoe/detail"
     const val IMAGE_URL = "/common/image"
 
-    const val SERVICE_USER = "/service/db/user"
-    const val SERVICE_SHOE = "/service/db/shoe"
-    const val SERVICE_FAV_SHOE = "/service/db/shoe"
-    const val SERVICE_STORAGE = "/service/db/storage"
+    const val SERVICE_USER = "/service/user"
+    const val SERVICE_SHOE = "/service/shoe"
+    const val SERVICE_FAV_SHOE = "/service/favourShoe"
+    const val SERVICE_STORAGE = "/service/storage"
 }

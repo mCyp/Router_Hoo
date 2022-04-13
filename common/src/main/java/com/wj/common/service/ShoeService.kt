@@ -1,9 +1,11 @@
-package com.example.service.db.provider
+package com.wj.common.service
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import com.alibaba.android.arouter.facade.template.IProvider
-import com.example.service.db.data.Shoe
+import com.example.entity.data.Shoe
+import kotlinx.coroutines.flow.Flow
 
 interface ShoeService: IProvider {
     fun getPageShoes(startIndex: Long, endIndex: Long): List<Shoe>

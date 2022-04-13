@@ -2,8 +2,7 @@ package com.example.service.db.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.service.db.data.FavouriteShoe
-import com.example.service.db.data.Shoe
+import com.example.entity.data.FavouriteShoe
 
 /**
  * 收藏记录的Dao
